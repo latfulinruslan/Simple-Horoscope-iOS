@@ -40,4 +40,26 @@ class Model {
     let zodiacSignType: [String] = ["common"]
     let zodiacSignTypeRus: [String] = ["Общий"]
     
+    //получение пути к файлу
+    func getPathForXML(type: String) -> String {
+        var path: String = ""
+        switch type {
+        case "common":
+            path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/common.xml"
+        default:
+            return ""
+        }
+        print(path)
+        if FileManager.default.fileExists(atPath: path) {
+            return path
+        } else {
+            FileManager.default.createFile(atPath: path, contents: nil, attributes: nil)
+        }
+        return path
+    }
+    
+    //загрузить файл
+    
+    //распарсить файл
+    
 }
