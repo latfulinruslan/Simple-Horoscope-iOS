@@ -14,6 +14,9 @@
 		BC89D30E21EB743A003E0317 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC89D30C21EB743A003E0317 /* LaunchScreen.storyboard */; };
 		BC89D31921EB743A003E0317 /* HoroscopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC89D31821EB743A003E0317 /* HoroscopeTests.swift */; };
 		BC89D32421EB743A003E0317 /* HoroscopeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC89D32321EB743A003E0317 /* HoroscopeUITests.swift */; };
+		BC89D33221EB774C003E0317 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC89D33121EB774C003E0317 /* Model.swift */; };
+		BC89D33521EB7D99003E0317 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC89D33421EB7D99003E0317 /* CollectionViewCell.swift */; };
+		BC89D33721EB883F003E0317 /* UserSignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC89D33621EB883F003E0317 /* UserSignViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		BC89D31F21EB743A003E0317 /* HoroscopeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoroscopeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC89D32321EB743A003E0317 /* HoroscopeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoroscopeUITests.swift; sourceTree = "<group>"; };
 		BC89D32521EB743A003E0317 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC89D33121EB774C003E0317 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		BC89D33421EB7D99003E0317 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		BC89D33621EB883F003E0317 /* UserSignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSignViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +83,7 @@
 		BC89D2F721EB7439003E0317 = {
 			isa = PBXGroup;
 			children = (
+				BC89D33321EB7751003E0317 /* Model */,
 				BC89D30221EB7439003E0317 /* Horoscope */,
 				BC89D31721EB743A003E0317 /* HoroscopeTests */,
 				BC89D32221EB743A003E0317 /* HoroscopeUITests */,
@@ -97,6 +104,8 @@
 		BC89D30221EB7439003E0317 /* Horoscope */ = {
 			isa = PBXGroup;
 			children = (
+				BC89D33621EB883F003E0317 /* UserSignViewController.swift */,
+				BC89D33421EB7D99003E0317 /* CollectionViewCell.swift */,
 				BC89D30321EB7439003E0317 /* AppDelegate.swift */,
 				BC89D30521EB7439003E0317 /* ViewController.swift */,
 				BC89D30721EB7439003E0317 /* Main.storyboard */,
@@ -123,6 +132,14 @@
 				BC89D32521EB743A003E0317 /* Info.plist */,
 			);
 			path = HoroscopeUITests;
+			sourceTree = "<group>";
+		};
+		BC89D33321EB7751003E0317 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BC89D33121EB774C003E0317 /* Model.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,7 +273,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC89D33221EB774C003E0317 /* Model.swift in Sources */,
 				BC89D30621EB7439003E0317 /* ViewController.swift in Sources */,
+				BC89D33521EB7D99003E0317 /* CollectionViewCell.swift in Sources */,
+				BC89D33721EB883F003E0317 /* UserSignViewController.swift in Sources */,
 				BC89D30421EB7439003E0317 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
