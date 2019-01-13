@@ -23,7 +23,40 @@ var userSign: String? {
        return UserDefaults.standard.object(forKey: "UserSign") as? String
     }
 }
-class Model {
+
+func isFirstStart() -> Bool{
+    let defaults = UserDefaults.standard
+    
+    if let isAppAlreadyLaunchedOnce = defaults.string(forKey: "isAppAlreadyLaunchedOnce"){
+        print("App already launched : \(isAppAlreadyLaunchedOnce)")
+        return false
+    }else{
+        defaults.set(true, forKey: "isAppAlreadyLaunchedOnce")
+        print("App launched first time")
+        return true
+    }
+}
+
+func getfileCreatedDate(theFile: String) -> Date {
+    
+    var theCreationDate = Date()
+    do{
+        let aFileAttributes = try FileManager.default.attributesOfItem(atPath: theFile) as [FileAttributeKey:Any]
+        theCreationDate = aFileAttributes[FileAttributeKey.creationDate] as! Date
+        
+    } catch let theError as Error{
+        print("file not found \(theError)")
+    }
+    return theCreationDate
+}
+
+
+
+
+
+
+
+class Model: NSObject, XMLParserDelegate {
     static let shared = Model()
     
     var ZodiacSigns: [ZodiacSign] = []
@@ -59,7 +92,100 @@ class Model {
     }
     
     //загрузить файл
+    func loadXML(type: String){
+        var forLoad:String = ""
+        switch type {
+        case "common":
+            forLoad = "https://ignio.com/r/export/utf/xml/daily/com.xml"
+        default:
+            return
+        }
+        
+        let urlForLoad = URL(string: forLoad)
+        let filePath = getPathForXML(type: type)
+        
+        let fileDate = getfileCreatedDate(theFile: filePath)
+        
+        if ((isFirstStart()) || (abs(round(fileDate.timeIntervalSinceNow)) > 86400) ){
+            let session = URLSession(configuration: .default)
+            
+            let task = session.downloadTask(with: urlForLoad!) { (urlFile, response, error) in
+                if urlFile != nil {
+                    do {
+                        try FileManager.default.removeItem(at: URL(fileURLWithPath: filePath))
+                    } catch let errorRemove as NSError {
+                        print("error when remove \(errorRemove)")
+                    }
+                    
+                    do {
+                        try FileManager.default.copyItem(at: urlFile!, to: URL(fileURLWithPath: filePath))
+                    } catch let error as NSError {
+                        print("error when remove \(error)")
+                    }
+                    
+                }
+            }
+            
+            task.resume()
+            
+        }
+        
+        parseXML(type: type)
+    }
     
     //распарсить файл
+    func parseXML(type: String) {
+        ZodiacSigns = []
+        let parser = XMLParser(contentsOf: URL(fileURLWithPath: getPathForXML(type: type)))
+        parser?.delegate = self
+        parser?.parse()
+    }
+    
+    
+    var currentZodiacSign: ZodiacSign?
+    
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]){
+        
+        if elementName == "date"{
+            if let currentDateString = attributeDict["today"]{
+                todayDate = currentDateString
+            }
+        }
+        
+        if staticZodiacSigns.contains(elementName) {
+            currentZodiacSign = ZodiacSign()
+        }
+    }
+
+    
+    var currentCharacters: String = ""
+    
+    func parser(_ parser: XMLParser, foundCharacters string: String){
+        currentCharacters += string
+    }
+    
+    
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?){
+     
+        if elementName == "yesterday"{
+            currentZodiacSign?.yesterday = currentCharacters
+            currentCharacters = ""
+        }
+        
+        if elementName == "today"{
+            currentZodiacSign?.today = currentCharacters
+            currentCharacters = ""
+        }
+        
+        if elementName == "tomorrow" {
+            currentZodiacSign?.tomorrow = currentCharacters
+            currentCharacters = ""
+        }
+        
+        if staticZodiacSigns.contains(elementName) {
+            ZodiacSigns.append(currentZodiacSign!)
+            currentCharacters = ""
+        }
+    }
     
 }
