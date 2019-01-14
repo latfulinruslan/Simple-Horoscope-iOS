@@ -17,6 +17,7 @@
 		BC89D33221EB774C003E0317 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC89D33121EB774C003E0317 /* Model.swift */; };
 		BC89D33521EB7D99003E0317 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC89D33421EB7D99003E0317 /* CollectionViewCell.swift */; };
 		BC89D33721EB883F003E0317 /* UserSignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC89D33621EB883F003E0317 /* UserSignViewController.swift */; };
+		BCD67D9A21ECD00600F3B16F /* CurrentHoroscopeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD67D9921ECD00600F3B16F /* CurrentHoroscopeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		BC89D33121EB774C003E0317 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		BC89D33421EB7D99003E0317 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		BC89D33621EB883F003E0317 /* UserSignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSignViewController.swift; sourceTree = "<group>"; };
+		BCD67D9921ECD00600F3B16F /* CurrentHoroscopeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentHoroscopeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 		BC89D30221EB7439003E0317 /* Horoscope */ = {
 			isa = PBXGroup;
 			children = (
+				BCD67D9921ECD00600F3B16F /* CurrentHoroscopeViewController.swift */,
 				BC89D33621EB883F003E0317 /* UserSignViewController.swift */,
 				BC89D33421EB7D99003E0317 /* CollectionViewCell.swift */,
 				BC89D30321EB7439003E0317 /* AppDelegate.swift */,
@@ -274,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC89D33221EB774C003E0317 /* Model.swift in Sources */,
+				BCD67D9A21ECD00600F3B16F /* CurrentHoroscopeViewController.swift in Sources */,
 				BC89D30621EB7439003E0317 /* ViewController.swift in Sources */,
 				BC89D33521EB7D99003E0317 /* CollectionViewCell.swift in Sources */,
 				BC89D33721EB883F003E0317 /* UserSignViewController.swift in Sources */,

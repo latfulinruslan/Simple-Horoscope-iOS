@@ -9,7 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+ 
+    var selectedIndex: Int?
     
     //change user zodiac sign
     @IBAction func pushUserSignAction(_ sender: Any) {
@@ -46,6 +47,28 @@ class ViewController: UIViewController {
             present(nc, animated: true, completion: nil)
         }
         print(userSign)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        for (index, item) in Model.shared.staticZodiacSigns.enumerated(){
+            if item == userSign {
+                selectedIndex = index
+            }
+        }
+        
+        performSegue(withIdentifier: "goToHoroscope", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToHoroscope"{
+            if let indexpatch = selectedIndex{
+                print(Model.shared.ZodiacSigns)
+                print(Model.shared.ZodiacSigns.count)
+                print(indexpatch)
+                (segue.destination as! CurrentHoroscopeViewController).userSign = Model.shared.staticZodiacSignsRus[indexpatch]
+                (segue.destination as! CurrentHoroscopeViewController).horoscope = Model.shared.ZodiacSigns[indexpatch].today
+            }
+        }
     }
 }
 

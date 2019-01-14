@@ -62,34 +62,55 @@
                     </view>
                     <navigationItem key="navigationItem" title="Horoscope type" id="zFY-Iu-ro9">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="pF6-5O-M2h">
+                            <color key="tintColor" red="0.59118699149999998" green="0.22978294760000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="pushUserSignAction:" destination="BYZ-38-t0r" id="M5N-h7-Lm8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="U2z-eU-FZh" kind="show" id="AnA-Dx-tha"/>
+                        <segue destination="U2z-eU-FZh" kind="show" identifier="goToHoroscope" id="AnA-Dx-tha"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1046.376811594203" y="133.25892857142856"/>
         </scene>
-        <!--View Controller-->
+        <!--Current Horoscope View Controller-->
         <scene sceneID="4lL-qc-ZLh">
             <objects>
-                <viewController id="U2z-eU-FZh" sceneMemberID="viewController">
+                <viewController id="U2z-eU-FZh" customClass="CurrentHoroscopeViewController" customModule="Horoscope" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PkD-d0-WAW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User zodiac Sign" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swc-7V-xdD">
+                                <rect key="frame" x="20" y="126" width="374" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Horoscope" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWX-EX-sNk">
+                                <rect key="frame" x="20" y="317" width="374" height="245"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="0.59118699149999998" green="0.22978294760000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="4BS-Nm-Vdi"/>
                     </view>
                     <navigationItem key="navigationItem" id="C8a-uP-F94"/>
+                    <connections>
+                        <outlet property="horoscopeLabel" destination="xWX-EX-sNk" id="pMD-eQ-yNi"/>
+                        <outlet property="userZodiacSignLabel" destination="swc-7V-xdD" id="cqO-hl-9cN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ji-m5-svD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2159" y="133"/>
+            <point key="canvasLocation" x="2000.0000000000002" y="132.58928571428572"/>
         </scene>
         <!--Choose your zodiac sign-->
         <scene sceneID="0PZ-c9-Xg1">
@@ -143,6 +164,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Choose your zodiac sign" id="tQ3-9o-PG1">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="FtU-e2-Rue">
+                            <color key="tintColor" red="0.39408298883867809" green="0.15002008770045805" blue="0.6861034650259068" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="pushCancelAction:" destination="S2b-0a-Lpv" id="4Dr-W3-sc9"/>
                             </connections>
