@@ -73,8 +73,8 @@ class Model: NSObject, XMLParserDelegate {
     // Овен , Телец , Близнецы , Рак , Лев , Дева , Весы , Скорпион , Стрелец , Козерог , Водолей и Рыбы .
     let staticZodiacSignsRus: [String] = ["Овен", "Телец", "Близнецы", "Рак", "Лев", "Дева", "Весы", "Скорпион", "Стрелец", "Козерог", "Водолей", "Рыбы"]
     
-    let zodiacSignType: [String] = ["common"]
-    let zodiacSignTypeRus: [String] = ["Общий", "Здоровье", "Бизнес", "Любовный", "Эротический", ""]
+    let zodiacSignType: [String] = ["common", "health", "business", "love", "erotic", "mobile", "cook"]
+    let zodiacSignTypeRus: [String] = ["Общий", "Здоровье", "Бизнес", "Любовный", "Эротический", "Мобильный", "Кулинарный"]
     
     //получение пути к файлу
     func getPathForXML(type: String) -> String {
@@ -82,8 +82,20 @@ class Model: NSObject, XMLParserDelegate {
         switch type {
         case "common":
             path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/common.xml"
+        case "heath":
+            path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/health.xml"
+        case "business":
+            path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/business.xml"
+        case "love":
+            path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/love.xml"
+        case "erotic":
+            path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/erotic.xml"
+        case "mobile":
+            path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/mobile.xml"
+        case "cook":
+            path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/cook.xml"
         default:
-            return ""
+            path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/common.xml"
         }
         print(path)
         if FileManager.default.fileExists(atPath: path) {
@@ -100,8 +112,20 @@ class Model: NSObject, XMLParserDelegate {
         switch type {
         case "common":
             forLoad = "https://ignio.com/r/export/utf/xml/daily/com.xml"
+        case "heath":
+            forLoad = "https://ignio.com/r/export/utf/xml/daily/hea.xml"
+        case "business":
+            forLoad = "https://ignio.com/r/export/utf/xml/daily/bus.xml"
+        case "love":
+            forLoad = "https://ignio.com/r/export/utf/xml/daily/lov.xml"
+        case "erotic":
+            forLoad = "https://ignio.com/r/export/utf/xml/daily/ero.xml"
+        case "mobile":
+            forLoad = "https://ignio.com/r/export/utf/xml/daily/mob.xml"
+        case "cook":
+            forLoad = "https://ignio.com/r/export/utf/xml/daily/cook.xml"
         default:
-            return
+            forLoad = "https://ignio.com/r/export/utf/xml/daily/com.xml"
         }
         
         let urlForLoad = URL(string: forLoad)
