@@ -10,14 +10,40 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    
+    //change user zodiac sign
+    @IBAction func pushUserSignAction(_ sender: Any) {
+//        navigationController?.title = "Choose your zodiac sign"
+        let nc = storyboard?.instantiateViewController(withIdentifier: "UserSignSID") as! UINavigationController
+        
+        present(nc, animated: true, completion: nil)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("ErrorWhenXMLLoading"), object: nil, queue: nil) { (notification) in
+            let errorName = notification.userInfo?["errorName"]
+            print(errorName)
+            
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title: "Что-то пошло не так!", message: "Возможны ошибки с интернет соединением.", preferredStyle: .alert)
+                let alertButtonOK = UIAlertAction(title: "OK", style: .default, handler: nil)
+                
+                alertController.addAction(alertButtonOK)
+                
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
     }
 
+    
     override func viewDidAppear(_ animated: Bool) {
         if userSign == nil {
-            present((storyboard?.instantiateViewController(withIdentifier: "UserSidnSID"))!, animated: true, completion: nil)
+            let nc = storyboard?.instantiateViewController(withIdentifier: "UserSignSID") as! UINavigationController
+            present(nc, animated: true, completion: nil)
         }
         print(userSign)
     }

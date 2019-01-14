@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ZodiacSign{
     var yesterday: String?
@@ -56,6 +57,8 @@ func getfileCreatedDate(theFile: String) -> Date {
 
 
 
+
+
 class Model: NSObject, XMLParserDelegate {
     static let shared = Model()
     
@@ -71,7 +74,7 @@ class Model: NSObject, XMLParserDelegate {
     let staticZodiacSignsRus: [String] = ["Овен", "Телец", "Близнецы", "Рак", "Лев", "Дева", "Весы", "Скорпион", "Стрелец", "Козерог", "Водолей", "Рыбы"]
     
     let zodiacSignType: [String] = ["common"]
-    let zodiacSignTypeRus: [String] = ["Общий"]
+    let zodiacSignTypeRus: [String] = ["Общий", "Здоровье", "Бизнес", "Любовный", "Эротический", ""]
     
     //получение пути к файлу
     func getPathForXML(type: String) -> String {
@@ -106,6 +109,8 @@ class Model: NSObject, XMLParserDelegate {
         
         let fileDate = getfileCreatedDate(theFile: filePath)
         
+        var errorGlobal: String?
+        
         if ((isFirstStart()) || (abs(round(fileDate.timeIntervalSinceNow)) > 86400) ){
             let session = URLSession(configuration: .default)
             
@@ -113,16 +118,23 @@ class Model: NSObject, XMLParserDelegate {
                 if urlFile != nil {
                     do {
                         try FileManager.default.removeItem(at: URL(fileURLWithPath: filePath))
-                    } catch let errorRemove as NSError {
+                    } catch let errorRemove as Error {
                         print("error when remove \(errorRemove)")
+                        errorGlobal = errorRemove.localizedDescription
                     }
                     
                     do {
                         try FileManager.default.copyItem(at: urlFile!, to: URL(fileURLWithPath: filePath))
-                    } catch let error as NSError {
-                        print("error when remove \(error)")
+                    } catch let errorCopy as Error {
+                        print("error when copy \(errorCopy)")
+                        errorGlobal = errorCopy.localizedDescription
                     }
                     
+                } else {
+                    errorGlobal = error?.localizedDescription
+                }
+                if let errorGlobal = errorGlobal {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ErrorWhenXMLLoading"), object: self, userInfo: ["ErrorName": errorGlobal])
                 }
             }
             
