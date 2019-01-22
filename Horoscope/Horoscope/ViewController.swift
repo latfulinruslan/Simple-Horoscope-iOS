@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
  
     var selectedIndex: Int?
+    var currentHoroscopeType: String?
     
     //change user zodiac sign
     @IBAction func pushUserSignAction(_ sender: Any) {
@@ -55,8 +56,11 @@ class ViewController: UIViewController {
                 selectedIndex = index
             }
         }
+        currentHoroscopeType = Model.shared.zodiacSignType[indexPath.row]
+        print(Model.shared.zodiacSignType[indexPath.row])
+        Model.shared.parseXML(type: currentHoroscopeType!) 
         
-        performSegue(withIdentifier: "goToHoroscope", sender: self)
+        performSegue(withIdentifier: "goToHoroscope", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -65,8 +69,8 @@ class ViewController: UIViewController {
                 print(Model.shared.ZodiacSigns)
                 print(Model.shared.ZodiacSigns.count)
                 print(indexpatch)
-                (segue.destination as! CurrentHoroscopeViewController).userSign = Model.shared.staticZodiacSignsRus[indexpatch]
-                (segue.destination as! CurrentHoroscopeViewController).horoscope = Model.shared.ZodiacSigns[indexpatch].today
+                
+                (segue.destination as! CurrentHoroscopeViewController).horoscopeIndex = indexpatch
             }
         }
     }

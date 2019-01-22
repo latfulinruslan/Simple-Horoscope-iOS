@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 class ZodiacSign{
     var yesterday: String?
@@ -38,7 +37,7 @@ func isFirstStart() -> Bool{
     }
 }
 
-func getfileCreatedDate(theFile: String) -> Date {
+func getfileCreatedDate(theFile: String) -> Date? {
     
     var theCreationDate = Date()
     do{
@@ -47,15 +46,10 @@ func getfileCreatedDate(theFile: String) -> Date {
         
     } catch let theError as Error{
         print("file not found \(theError)")
+        return nil
     }
     return theCreationDate
 }
-
-
-
-
-
-
 
 
 
@@ -82,7 +76,7 @@ class Model: NSObject, XMLParserDelegate {
         switch type {
         case "common":
             path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/common.xml"
-        case "heath":
+        case "health":
             path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/health.xml"
         case "business":
             path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/business.xml"
@@ -98,11 +92,7 @@ class Model: NSObject, XMLParserDelegate {
             path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/common.xml"
         }
         print(path)
-        if FileManager.default.fileExists(atPath: path) {
-            return path
-        } else {
-            FileManager.default.createFile(atPath: path, contents: nil, attributes: nil)
-        }
+        
         return path
     }
     
@@ -112,7 +102,7 @@ class Model: NSObject, XMLParserDelegate {
         switch type {
         case "common":
             forLoad = "https://ignio.com/r/export/utf/xml/daily/com.xml"
-        case "heath":
+        case "health":
             forLoad = "https://ignio.com/r/export/utf/xml/daily/hea.xml"
         case "business":
             forLoad = "https://ignio.com/r/export/utf/xml/daily/bus.xml"
@@ -128,46 +118,105 @@ class Model: NSObject, XMLParserDelegate {
             forLoad = "https://ignio.com/r/export/utf/xml/daily/com.xml"
         }
         
+        var errorGlobal: String?
         let urlForLoad = URL(string: forLoad)
         let filePath = getPathForXML(type: type)
         
-        let fileDate = getfileCreatedDate(theFile: filePath)
         
-        var errorGlobal: String?
-        
-        if ((isFirstStart()) || (abs(round(fileDate.timeIntervalSinceNow)) > 86400) ){
-            let session = URLSession(configuration: .default)
-            
-            let task = session.downloadTask(with: urlForLoad!) { (urlFile, response, error) in
-                if urlFile != nil {
-                    do {
-                        try FileManager.default.removeItem(at: URL(fileURLWithPath: filePath))
-                    } catch let errorRemove as Error {
-                        print("error when remove \(errorRemove)")
-                        errorGlobal = errorRemove.localizedDescription
+        ///////////////////////////////
+        if let fileDate = getfileCreatedDate(theFile: filePath){
+            print(abs(round(fileDate.timeIntervalSinceNow)) < 86400)
+            if (abs(round(fileDate.timeIntervalSinceNow)) < 86400) {
+                
+                return
+            }
+        } else {
+            if !(FileManager.default.fileExists(atPath: filePath)) {
+                let session = URLSession(configuration: .default)
+                
+                let task = session.downloadTask(with: urlForLoad!) { (urlFile, response, error) in
+                    if urlFile != nil {
+                        
+                        if !(FileManager.default.fileExists(atPath: filePath)) {
+                            FileManager.default.createFile(atPath: filePath, contents: nil, attributes: nil)
+                        }
+                        
+                        do {
+                            try FileManager.default.removeItem(at: URL(fileURLWithPath: filePath))
+                        } catch let errorRemove as Error {
+                            print("error when remove \(errorRemove)")
+                            errorGlobal = errorRemove.localizedDescription
+                        }
+                        
+                        do {
+                            try FileManager.default.copyItem(at: urlFile!, to: URL(fileURLWithPath: filePath))
+                            print("File is load")
+                        } catch let errorCopy as Error {
+                            print("error when copy \(errorCopy)")
+                            errorGlobal = errorCopy.localizedDescription
+                        }
+                        
+                    } else {
+                        errorGlobal = error?.localizedDescription
                     }
-                    
-                    do {
-                        try FileManager.default.copyItem(at: urlFile!, to: URL(fileURLWithPath: filePath))
-                    } catch let errorCopy as Error {
-                        print("error when copy \(errorCopy)")
-                        errorGlobal = errorCopy.localizedDescription
+                    if let errorGlobal = errorGlobal {
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ErrorWhenXMLLoading"), object: self, userInfo: ["ErrorName": errorGlobal])
                     }
+                    //self.parseXML(type: type)
                     
-                } else {
-                    errorGlobal = error?.localizedDescription
                 }
-                if let errorGlobal = errorGlobal {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ErrorWhenXMLLoading"), object: self, userInfo: ["ErrorName": errorGlobal])
+                
+                task.resume()
+                
+                return
+            } else {
+                let firstStart = isFirstStart()
+                if firstStart == false{
+                    
+                    return
                 }
             }
-            
-            task.resume()
-            
         }
+        //////////////////////////////
+ 
+        let session = URLSession(configuration: .default)
+            
+        let task = session.downloadTask(with: urlForLoad!) { (urlFile, response, error) in
+            if urlFile != nil {
+                    
+                if !(FileManager.default.fileExists(atPath: filePath)) {
+                        FileManager.default.createFile(atPath: filePath, contents: nil, attributes: nil)
+                }
+                    
+                do {
+                    try FileManager.default.removeItem(at: URL(fileURLWithPath: filePath))
+                } catch let errorRemove as Error {
+                    print("error when remove \(errorRemove)")
+                    errorGlobal = errorRemove.localizedDescription
+                }
+                    
+                do {
+                    try FileManager.default.copyItem(at: urlFile!, to: URL(fileURLWithPath: filePath))
+                    self.parseXML(type: type)
+                } catch let errorCopy as Error {
+                    print("error when copy \(errorCopy)")
+                    errorGlobal = errorCopy.localizedDescription
+                }
+                    
+            } else {
+                errorGlobal = error?.localizedDescription
+            }
+            if let errorGlobal = errorGlobal {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ErrorWhenXMLLoading"), object: self, userInfo: ["ErrorName": errorGlobal])
+            }
+                //self.parseXML(type: type)
+
+        }
+            
+        task.resume()
+
         
-        parseXML(type: type)
-    }
+}
     
     //распарсить файл
     func parseXML(type: String) {
@@ -175,6 +224,11 @@ class Model: NSObject, XMLParserDelegate {
         let parser = XMLParser(contentsOf: URL(fileURLWithPath: getPathForXML(type: type)))
         parser?.delegate = self
         parser?.parse()
+        
+        print("Data refresh")
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dataRefreshed"), object: self)
+        
     }
     
     
@@ -186,7 +240,16 @@ class Model: NSObject, XMLParserDelegate {
             if let currentDateString = attributeDict["today"]{
                 todayDate = currentDateString
             }
+            
+            if let currentDateString = attributeDict["yesterday"]{
+                yesterdayDate = currentDateString
+            }
+            
+            if let currentDateString = attributeDict["tomorrow"]{
+                tomorrowDate = currentDateString
+            }
         }
+        
         
         if staticZodiacSigns.contains(elementName) {
             currentZodiacSign = ZodiacSign()

@@ -10,7 +10,7 @@ import UIKit
 
 class UserSignViewController: UIViewController {
 
-    var selectedItem: Int?
+    var selectedItem: Int = 0
     
     
     @IBAction func pushCancelAction(_ sender: Any) {
@@ -22,6 +22,8 @@ class UserSignViewController: UIViewController {
         
         if userSign == nil{
             navigationItem.leftBarButtonItem = nil
+        } else {
+            navigationItem.title = "Current sign: \(userSign!)"
         }
 
         // Do any additional setup after loading the view.
@@ -52,6 +54,7 @@ extension UserSignViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserSignCell", for: indexPath) as! CollectionViewCell
         
+        cell.imageZodiacSign.image = UIImage(named: Model.shared.staticZodiacSigns[indexPath.row])
         cell.labelName.text = Model.shared.staticZodiacSignsRus[indexPath.row]
         return cell
     }

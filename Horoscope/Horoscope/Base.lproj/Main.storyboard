@@ -29,7 +29,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="typeCell" id="ZSt-kU-Ucq" customClass="CollectionViewCell" customModule="Horoscope" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" reuseIdentifier="typeCell" id="ZSt-kU-Ucq" customClass="CollectionViewCell" customModule="Horoscope" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="212"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -61,7 +61,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Horoscope type" id="zFY-Iu-ro9">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="pF6-5O-M2h">
+                        <barButtonItem key="leftBarButtonItem" image="set" id="pF6-5O-M2h">
                             <color key="tintColor" red="0.59118699149999998" green="0.22978294760000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="pushUserSignAction:" destination="BYZ-38-t0r" id="M5N-h7-Lm8"/>
@@ -69,7 +69,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="U2z-eU-FZh" kind="show" identifier="goToHoroscope" id="AnA-Dx-tha"/>
+                        <segue destination="U2z-eU-FZh" kind="show" identifier="goToHoroscope" id="sJa-X5-FAk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -79,20 +79,20 @@
         <!--Current Horoscope View Controller-->
         <scene sceneID="4lL-qc-ZLh">
             <objects>
-                <viewController id="U2z-eU-FZh" customClass="CurrentHoroscopeViewController" customModule="Horoscope" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="goToHoroscope" id="U2z-eU-FZh" customClass="CurrentHoroscopeViewController" customModule="Horoscope" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PkD-d0-WAW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User zodiac Sign" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swc-7V-xdD">
-                                <rect key="frame" x="20" y="126" width="374" height="46"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User zodiac Sign" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swc-7V-xdD">
+                                <rect key="frame" x="20" y="126" width="374" height="71"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Horoscope" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWX-EX-sNk">
-                                <rect key="frame" x="20" y="317" width="374" height="245"/>
+                                <rect key="frame" x="20" y="205" width="374" height="323"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
@@ -100,9 +100,10 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.59118699149999998" green="0.22978294760000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.59141153099999999" green="0.23067134619999999" blue="0.99944967029999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="4BS-Nm-Vdi"/>
                     </view>
-                    <navigationItem key="navigationItem" id="C8a-uP-F94"/>
+                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" id="C8a-uP-F94"/>
                     <connections>
                         <outlet property="horoscopeLabel" destination="xWX-EX-sNk" id="pMD-eQ-yNi"/>
                         <outlet property="userZodiacSignLabel" destination="swc-7V-xdD" id="cqO-hl-9cN"/>
@@ -110,7 +111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ji-m5-svD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2000.0000000000002" y="132.58928571428572"/>
+            <point key="canvasLocation" x="1877" y="133"/>
         </scene>
         <!--Choose your zodiac sign-->
         <scene sceneID="0PZ-c9-Xg1">
@@ -139,16 +140,21 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQH-qX-T2V">
-                                                    <rect key="frame" x="26" y="88" width="142" height="21"/>
+                                                    <rect key="frame" x="29" y="40" width="142" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1DE-OC-HLv">
+                                                    <rect key="frame" x="53" y="80" width="94" height="77"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" red="0.74502051097683097" green="0.61112566856198414" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
+                                            <outlet property="imageZodiacSign" destination="1DE-OC-HLv" id="yAE-JD-ImZ"/>
                                             <outlet property="labelName" destination="hQH-qX-T2V" id="CBn-Pw-pD6"/>
                                         </connections>
                                     </collectionViewCell>
@@ -214,4 +220,7 @@
             <point key="canvasLocation" x="136.23188405797103" y="857.14285714285711"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="set" width="25" height="25"/>
+    </resources>
 </document>

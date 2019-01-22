@@ -16,22 +16,56 @@ class CurrentHoroscopeViewController: UIViewController {
     
     var userSign: String?
     var horoscope: String?
+    var horoscopeIndex: Int?
+    var currentDate: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "dataRefreshed"), object: nil, queue: nil) { (notification) in
+            print("notification catch")
+            if let tempInd = self.horoscopeIndex {
+                self.horoscope = Model.shared.ZodiacSigns[tempInd].today
+                self.userSign = Model.shared.staticZodiacSignsRus[tempInd]
+            }
+            
+            
+                if self.userSign != nil {
+                    self.userZodiacSignLabel.text = self.userSign
+                } else {
+                    self.userZodiacSignLabel.text = "user"
+                }
+                if self.horoscope != nil {
+                    self.horoscopeLabel.text = self.horoscope
+                } else {
+                    self.userZodiacSignLabel.text = "content"
+                }
+            
+        }
+        
+
 
         // Do any additional setup after loading the view.
     }
-    override func viewDidAppear(_ animated: Bool) {
-        if userSign != nil {
-            userZodiacSignLabel.text = userSign
-        } else {
-            userZodiacSignLabel.text = "lox"
-        }
-        if horoscope != nil {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let tempIndex = horoscopeIndex{
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd.MM.yyyy"
+            currentDate = dateFormatter.string(from: Date())
+            
+            if currentDate == Model.shared.todayDate {
+                horoscope = Model.shared.ZodiacSigns[tempIndex].today
+            }
+            if currentDate == Model.shared.tomorrowDate {
+                horoscope = Model.shared.ZodiacSigns[tempIndex].tomorrow
+            }
+            
+            userSign = Model.shared.staticZodiacSignsRus[tempIndex]
+            
+            userZodiacSignLabel.text = userSign! + "\n \(currentDate!)"
             horoscopeLabel.text = horoscope
-        } else {
-            userZodiacSignLabel.text = "lox"
         }
         
     }

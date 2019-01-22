@@ -16,7 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        Model.shared.loadXML(type: "common")
+        for type in Model.shared.zodiacSignType{
+            Model.shared.loadXML(type: type)
+        }
         return true
     }
 
