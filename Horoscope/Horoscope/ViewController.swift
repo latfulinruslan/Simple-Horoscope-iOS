@@ -13,6 +13,14 @@ class ViewController: UIViewController {
     var selectedIndex: Int?
     var currentHoroscopeType: String?
     
+    
+    @IBAction func pushSettingsAction(_ sender: Any) {
+        
+        let nc = storyboard?.instantiateViewController(withIdentifier: "UserSignSID") as! UINavigationController
+        
+        present(nc, animated: true, completion: nil)
+    }
+    
     //change user zodiac sign
     @IBAction func pushUserSignAction(_ sender: Any) {
 //        navigationController?.title = "Choose your zodiac sign"
@@ -20,6 +28,10 @@ class ViewController: UIViewController {
         
         present(nc, animated: true, completion: nil)
         
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     override func viewDidLoad() {

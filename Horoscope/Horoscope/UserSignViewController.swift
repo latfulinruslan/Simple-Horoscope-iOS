@@ -13,14 +13,25 @@ class UserSignViewController: UIViewController {
     var selectedItem: Int = 0
     
     
+    @IBOutlet weak var buttonCancel: UIButton!
+    @IBAction func pushCancel(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     @IBAction func pushCancelAction(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if userSign == nil{
+            buttonCancel.isHidden = true
             navigationItem.leftBarButtonItem = nil
         } else {
             navigationItem.title = "Current sign: \(userSign!)"
